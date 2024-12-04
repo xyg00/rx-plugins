@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Pagination</title>
+  </head>
+  <body>
+    <div class="pagination-box" id="pagination-box" data-total-count="100" data-each-page-count="10">
+      <div class="pagination"></div>
+    </div>
+  </body>
+  <script src="pagination.js"></script>
+  <script>
+    const pageEle = document.querySelector(".pagination"); //获取页面渲染的容器
+
+    const paginationEle = document.getElementById("pagination-box");
+    //  数据总个数
+    const totalCount = paginationEle.getAttribute("data-total-count");
+    // 每页个数
+    const eachPageCount = paginationEle.getAttribute("data-each-page-count");
+    //   总共多少页
+    const pageCount = totalCount % eachPageCount > 0 ? totalCount / eachPageCount + 1 : totalCount / eachPageCount;
+
+    ready(1); //调用渲染容器的方法，传递初始页面为1
+    function ready(page) {
+      // 定义一个方法用来渲染容器
+      new PageClass(pageEle, pageCount, page, function (page) {
+        //new 一个PageClass类，传递容器元素，总页面数，当前页面，以及回调函数
+        console.log(page, "看看点击Page的时候页面是否会发生变化");
+
+        ready(page); //回调函数调用渲染容器的方法
+        console.log(page);
+        //这个是自定义的页面变化的时候获取页面数据的渲染表格的方法
+      });
+    }
+  </script>
+</html>
